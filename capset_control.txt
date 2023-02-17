@@ -1,0 +1,85 @@
+clear_screen                clear      cl   clear screen and home cursor (P*)
+clr_eol                     el         ce   clear to end of line (P)
+clr_eos                     ed         cd   clear to end of screen (P*)
+clr_bol                     el1        cb   Clear to beginning of line
+
+scroll_forward              ind        sf   scroll text up (P)
+scroll_reverse              ri         sr   scroll text down (P)
+
+cursor_home                 home       ho   home cursor (if no cup)
+
+cursor_address              cup        cm   move to row #1 columns #2
+parm_down_cursor            cud        DO   down #1 lines (P*)
+parm_up_cursor              cuu        UP   up #1 lines (P*)
+column_address              hpa        ch   horizontal position #1, absolute (P)
+set_left_margin_parm        smglp      Zm   Set left (right) margin at column #1
+set_right_margin_parm       smgrp      Zn   Set right margin at column #1
+clear_margins               mgc        MC   clear right and left soft margins
+
+user7                       u7         u7   report cursor position
+
+
+
+# back_tab                    cbt        bt   back tab (P)
+# bell                        bel        bl   audible signal (bell) (P)
+# carriage_return             cr         cr   carriage return (P*) (P*)
+# change_scroll_region        csr        cs   change region to line #1 to line #2 (P)
+# clear_all_tabs              tbc        ct   clear all tab stops (P)
+# column_address              hpa        ch   horizontal position #1, absolute (P)
+# cursor_down                 cud1       do   down one line
+# cursor_home                 home       ho   home cursor (if no cup)
+# cursor_invisible            civis      vi   make cursor invisible
+# cursor_left                 cub1       le   move left one space
+# cursor_normal               cnorm      ve   make cursor appear normal (undo civis/cvvis)
+# cursor_right                cuf1       nd   non-destructive space (move right one space)
+# cursor_up                   cuu1       up   up one line
+# cursor_visible              cvvis      vs   make cursor very visible
+# delete_character            dch1       dc   delete character (P*)
+# delete_line                 dl1        dl   delete line (P*)
+# erase_chars                 ech        ec   erase #1 characters (P)
+# flash_screen                flash      vb   visible bell (may not move cursor)
+# init_2string                is2        is   initialization string
+# insert_line                 il1        al   insert line (P*)
+# newline                     nel        nw   newline (behave like cr followed by lf)
+# parm_dch                    dch        DC   delete #1 characters (P*)
+# parm_delete_line            dl         DL   delete #1 lines (P*)
+# parm_down_cursor            cud        DO   down #1 lines (P*)
+# parm_ich                    ich        IC   insert #1 characters (P*)
+# parm_index                  indn       SF   scroll forward #1 lines (P)
+# parm_insert_line            il         AL   insert #1 lines (P*)
+# parm_left_cursor            cub        LE   move #1 characters to the left (P)
+# parm_right_cursor           cuf        RI   move #1 characters to the right (P*)
+# parm_rindex                 rin        SR   scroll back #1 lines (P)
+# parm_up_cursor              cuu        UP   up #1 lines (P*)
+# print_screen                mc0        ps   print contents of screen
+# prtr_off                    mc4        pf   turn off printer
+# prtr_on                     mc5        po   turn on printer
+# repeat_char                 rep        rp   repeat char #1 #2 times (P*)
+# reset_1string               rs1        r1   reset string
+# reset_2string               rs2        r2   reset string
+# restore_cursor              rc         rc   restore cursor to position of last save_cursor
+# row_address                 vpa        cv   vertical position #1 absolute (P)
+# save_cursor                 sc         sc   save current cursor position (P)
+# scroll_forward              ind        sf   scroll text up (P)
+# scroll_reverse              ri         sr   scroll text down (P)
+# set_attributes              sgr        sa   define video attributes #1-#9 (PG9)
+# set_tab                     hts        st   set a tab in every row, current columns
+# tab                         ht         ta   tab to next 8-space hardware tab stop
+# acs_chars                   acsc       ac   graphics charset pairs, based on vt100
+# clear_margins               mgc        MC   clear right and left soft margins
+# user6                       u6         u6   User string #6
+# user7                       u7         u7   User string #7
+# user8                       u8         u8   User string #8
+# user9                       u9         u9   User string #9
+# orig_pair                   op         op   Set default pair to its original value
+# orig_colors                 oc         oc   Set all color pairs to the original ones
+# initialize_color            initc      Ic   initialize color #1 to (#2,#3,#4)
+# set_left_margin_parm        smglp      Zm   Set left (right) margin at column #1
+# set_right_margin_parm       smgrp      Zn   Set right margin at column #1
+# set_a_foreground            setaf      AF   Set foreground color to #1, using ANSI escape
+# set_a_background            setab      AB   Set background color to #1, using ANSI escape
+# set_lr_margin               smglr      ML   Set both left and right margins to #1, #2.  (ML is not in BSD termcap).
+
+# Local Variables:
+# mode: sh
+# End:
