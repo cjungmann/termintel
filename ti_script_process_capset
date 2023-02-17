@@ -425,6 +425,9 @@ if process_command_line_args "$@"; then
     declare -a GLINES
     if collect_lines "GLINES"; then
         empty_output_file
+        write_text "#ifndef TI_CAPSET_${SET_NAME}_INC"
+        write_text "#define TI_CAPSET_${SET_NAME}_INC"
+        write_text ""
         write_text "#include \"ti_caps.h\""
         write_text ""
 
@@ -433,6 +436,8 @@ if process_command_line_args "$@"; then
         code_strings_array "GLINES" "names_${SET_NAME}" 0
         code_strings_array "GLINES" "desc_${SET_NAME}" 3
 
+        write_text ""
+        write_text "#endif"
         write_text ""
         code_simple_main "caps_${SET_NAME}" "desc_${SET_NAME}"
 
