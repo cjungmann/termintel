@@ -85,6 +85,11 @@ repositories).
 - If using **ioctl**, refer to **ioctl_tty**(2), particularly
   for TIOCGWINSZ, which may be the best way to get console dimensions.
 
+- While talking about **ioctl**, also consider the contents of
+  **ioctl_console**(2), which mentions **TIOCLINUX** (obsolete)
+  and */dev/vcsN* (alternative) method of reading the characters
+  on the screen.?
+
 - Include file references (*/usr/include/*)
   Study these files for reference, but follow the coding advice
   contained within: include **<termios.h** to include these files.
