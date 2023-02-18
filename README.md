@@ -1,6 +1,6 @@
-# PROJECT TermEx(pert)
+# PROJECT Terminal Interface (termif)
 
-Expert help for the development of console applications.
+Distilled instruction set to address basic terminal functionality.
 
 This project started as a place to learn and experiment with terminfo
 and other terminal-related objectives.  It has evolved into something
