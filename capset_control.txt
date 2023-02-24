@@ -3,15 +3,27 @@ clr_eol                     el         ce   clear to end of line (P)
 clr_eos                     ed         cd   clear to end of screen (P*)
 clr_bol                     el1        cb   Clear to beginning of line
 
+insert_line                 il1        al   insert line (P*)
+
 scroll_forward              ind        sf   scroll text up (P)
 scroll_reverse              ri         sr   scroll text down (P)
+change_scroll_region        csr        cs   change region to line #1 to line #2 (P)
+parm_index                  indn       SF   scroll forward #1 lines (P)
+parm_rindex                 rin        SR   scroll back #1 lines (P)
+
 
 cursor_home                 home       ho   home cursor (if no cup)
+
+save_cursor                 sc         sc   save current cursor position (P)
+restore_cursor              rc         rc   restore cursor to position of last save_cursor
 
 cursor_address              cup        cm   move to row #1 columns #2
 parm_down_cursor            cud        DO   down #1 lines (P*)
 parm_up_cursor              cuu        UP   up #1 lines (P*)
+parm_left_cursor            cub        LE   move #1 characters to the left (P)
 column_address              hpa        ch   horizontal position #1, absolute (P)
+
+
 set_left_margin_parm        smglp      Zm   Set left (right) margin at column #1
 set_right_margin_parm       smgrp      Zn   Set right margin at column #1
 clear_margins               mgc        MC   clear right and left soft margins
