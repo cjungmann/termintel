@@ -1,6 +1,11 @@
-# PROJECT Terminal Interface (termif)
+# PROJECT termintel
 
-Distilled instruction set to address basic terminal functionality.
+Intelligence, as in collected evidence about a subject.
+
+I am interested in creating terminal applications because I prefer to
+do my work in a terminal window.  For both Bash scripts and compiled
+applications, I am investigating **terminfo**, **termios**, and other
+interfaces for managing the terminal.
 
 This project started as a place to learn and experiment with terminfo
 and other terminal-related objectives.  It has evolved into something
