@@ -12,7 +12,7 @@ typedef struct terminfo_value {
 int TIV_is_terminator(TIV *tiv);
 
 // Initialize environment
-int TIV_setup(void);
+int TIV_setup(int count, TIV *tivs[]);
 
 int TIV_get_sequence_from_code(const char **sequence, const char *code);
 
@@ -25,6 +25,7 @@ void TIV_set_array(TIV *tiv);
 
 // Memory recovery
 void TIV_destroy_array(TIV *tiv);
+void TIV_destroy_arrays(int count, TIV *tivs[]);
 
 // Display/debugging functions
 int TIV_string_array_max_length(const char **strings);

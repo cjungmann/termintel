@@ -6,6 +6,7 @@
 #include <term.h>
 #include <unistd.h>   // for STDIN_FILENO
 
+
 #include "ti_caps.h"
 
 /**
@@ -19,10 +20,21 @@ int TIV_is_terminator(TIV *tiv)
 }
 
 /**
- * @brief Call to initialize terminfo environment. Prints error message on failure.
+ * @brief Call to initialize terminfo environment and set of TIV arrays
+ *
+ * Calls library setupterm() to initialize terminfo database access.
+ * Initializes a set of TIV arrays with sequences taken from the database.
+ * Call @ref TIV_destroy_arrays with the same array to free the memory,
+ * or call @ref TIV_destroy_array for each TIV array.
+ *
+ * @param "count"   number of elements in the following array
+ * @param "tivs"    pointer to an array of TIV arrays that should
+ *                  be initialized with sequences found in terminfo
+ *                  database.
+ *
  * @return 1 for success, 0 for failure.
  */
-int TIV_setup(void)
+int TIV_setup(int count, TIV *tivs[])
 {
    int erret;
    int result = setupterm((char*)NULL, STDIN_FILENO, &erret);
@@ -33,6 +45,17 @@ int TIV_setup(void)
          case 1: printf("Hardcopy output: curses unavailable.\n"); break;
          case 0: printf("Generic terminal: curses not supported.\n"); break;
          case -1: printf("Terminfo database not found.\n"); break;
+      }
+   }
+
+   // Initialise array of TIV arrays
+   if (count > 0)
+   {
+      TIV **tiv = tivs;
+      for (int i=0; i<count; ++i)
+      {
+         TIV_set_array(*tiv);
+         ++tiv;
       }
    }
 
@@ -189,6 +212,31 @@ void TIV_destroy_array(TIV *tiv)
       }
 
       ++ptr;
+   }
+}
+
+/**
+ * @brief Free memory from a set of TIV arrays.
+ *
+ * This function is a companion to the @ref TIV_setup function that
+ * allocated memory in a set of TIV arrays to start the program.
+ *
+ * @param "count"   number of elements in the following array
+ * @param "tivs"    pointer to an array of TIV arrays that should
+ *                  be destroyed to free the memory in which the
+ *                  terminfo sequences are saved.
+ */
+void TIV_destroy_arrays(int count, TIV *tivs[])
+{
+   // Destroy array of TIV arrays
+   if (count > 0)
+   {
+      TIV **tiv = tivs;
+      for (int i=0; i<count; ++i)
+      {
+         TIV_destroy_array(*tiv);
+         ++tiv;
+      }
    }
 }
 
