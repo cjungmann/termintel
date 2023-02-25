@@ -427,7 +427,6 @@ seek_row_by_field()
                 srbf_return_row=( "${srbf_row[@]}" )
                 return 0
             fi
-
             srbf_row=()
         fi
     done
@@ -849,15 +848,15 @@ start_user_dialog()
     collect_display_options "disp_filters" "disp_styles"
 
     while [ 1 -eq 1 ]; do
-        echo "$CLEAR_SCREEN"
+        echo -n "$TI_CLEAR_SCREEN"
 
         get_user_prefs "filter_ndx" "style_ndx" "disp_filters" "disp_styles"
         user_pref="$?"
 
         if [ "$user_pref" -eq 0 ]; then
-            echo "$CLEAR_SCREEN"
+            echo "$TI_CLEAR_SCREEN"
             less -r < <( use_agg_data "TERMDATA" "${disp_filters[$filter_ndx]}" "${disp_styles[$style_ndx]}" )
-            echo "$CLEAR_SCREEN"
+            echo "$TI_CLEAR_SCREEN"
         elif [ "$user_pref" -eq 1 ]; then
              continue
         else
@@ -877,29 +876,35 @@ declare TI_CURSOR_MOVE_HOME
 declare TI_CURSOR_UP_MANY
 declare TI_CURSOR_DOWN_MANY
 
+declare -a TI_CMDS=(
+    "TI_CLEAR_SCREEN"            "cl"
+    "TI_ENTER_CA_MODE"           "ti"
+    "TI_EXIT_CA_MODE"            "te"
+    "TI_ENTER_KEYPAD_MODE"       "ks"
+    "TI_EXIT_KEYPAD_MODE"        "ke"
+    "TI_CURSOR_MOVE_HOME"        "ho"
+    "TI_CURSOR_MOVE_UP_MANY"     "UP"
+    "TI_CURSOR_MOVE_DOWN_MANY"   "DO"
+)
+
 populate_ti_commands()
 {
-    local -n ptc_termdata_name="$1"
-    local -a cmds=(
-        "TI_CLEAR_SCREEN"            "cl"
-        "TI_ENTER_CA_MODE"           "ti"
-        "TI_EXIT_CA_MODE"            "te"
-        "TI_ENTER_KEYPAD_MODE"       "ks"
-        "TI_EXIT_KEYPAD_MODE"        "ke"
-        "TI_CURSOR_MOVE_HOME"        "ho"
-        "TI_CURSOR_MOVE_UP_MANY"     "UP"
-        "TI_CURSOR_MOVE_DOWN_MANY"   "DO"
-    )
+    local ptc_termdata_name="$1"
 
     local -a row
+    local ptc_sequence
     local el
-    for el in "${cmds[@]}"; do
-        row+=( "$row" )
+    for el in "${TI_CMDS[@]}"; do
+        row+=( "$el" )
         if [ "${#row[*]}" -eq 2 ]; then
-            local vname="${row[0]}"
-            if seek_sequence_by_ccode "$vname" "$ptc_termdata_name" "${row[1]}"; then
-                restore_escapes "$vname"
+            echo "Processing row: ${row[*]}" >&2
+            if seek_sequence_by_ccode "ptc_sequence" "$ptc_termdata_name" "${row[1]}"; then
+                echo "For ${row[1]}, modifying sequence '$ptc_sequence'"
+                restore_escapes "ptc_sequence"
+                local -n vname="${row[0]}"
+                vname="$ptc_sequence"
             fi
+            row=()
         fi
     done
 }
