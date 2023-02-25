@@ -1,5 +1,5 @@
-#include "ti_capset_modes.inc"
 #include "ti_caps.h"
+#include "ti_capset_modes.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -40,6 +40,8 @@ void ti_enter_blink_mode(void) { ti_set_mode(MODES_ENTER_BLINK_MODE); }
 void ti_exit_blink_mode(void)  { ti_set_mode(MODES_EXIT_ATTRIBUTE_MODE); }
 
 #ifdef TI_MODES_MAIN
+
+#include "ti_capset_modes.c"
 
 int main(int argc, const char **argv)
 {
