@@ -1,7 +1,7 @@
 #ifndef TI_TIOS_H
 #define TI_TIOS_H
 
-void tios_init(void);
+void tios_save_incoming(void);
 void tios_restore_incoming(void);
 void tios_disable_echo(void);
 void tios_restore_echo(void);

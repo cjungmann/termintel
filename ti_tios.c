@@ -9,7 +9,7 @@ struct termios g_termios_incoming = { 0 };
 /**
  * @brief Saves the termios state to be restored upon leaving program.
  */
-void tios_init(void)
+void tios_save_incoming(void)
 {
    int result = tcgetattr(STDIN_FILENO, &g_termios_incoming);
    if (result)
@@ -20,7 +20,7 @@ void tios_init(void)
 }
 
 /**
- * @brief Restores termios state saved when @ref tios_init was called.
+ * @brief Restores termios state saved when @ref tios_save_incoming was called.
  */
 void tios_restore_incoming(void)
 {
