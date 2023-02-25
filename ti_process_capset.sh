@@ -354,11 +354,18 @@ EOF2
 
         write_text "$main_start_code"
 
+        write_text "      printf(\"Showing capset ${SET_NAME}:\\n\");"
+        write_text ""
+
         if [ "$INCLUDE_NAMES" -eq 1 ]; then
+            write_text "      printf(\"\\nTIV elements with names:\\n\");"
             write_text "      TIV_dump_array(${array_name}, names_${SET_NAME});"
+            write_text ""
         fi
         if [ "$INCLUDE_DESCRIPTIONS" -eq 1 ]; then
+            write_text "      printf(\"\\nTIV elements with descriptions:\\n\");"
             write_text "      TIV_dump_array(${array_name}, desc_${SET_NAME});"
+            write_text ""
         fi
         write_text "$main_end_code"
         echo                              >> "$OUTPUT_FILE"
@@ -394,7 +401,15 @@ declare -a CL_LINE_REGEX_PARTS=(
 declare OIFS="$IFS"
 declare IFS=''
 declare CL_LINE_REGEX="${CL_LINE_REGEX_PARTS[*]}"
+IFS="$IFS"
 
+# Used by collect_lines() below to create a temporary file with
+# STDIN contents to use in place of INPUT_FILE.
+#
+# Args
+#    (name):    name of file to store STDIN content
+#
+# Return 0 (success) if any lines read, otherwise 1 if no content read.
 collect_stdin_content()
 {
     local -n csc_file="$1"
@@ -408,6 +423,16 @@ collect_stdin_content()
     return 1
 }
 
+# Read non-commented lines from the file named in INPUT_FILE (as
+# requested with the -i option) or STDIN if no input file.
+#
+# Using a regular expression, $CL_LINE_REGEX, will parse lines into
+# four parts which will be added to the array passed to the function.
+#
+# Args
+#    (name):   Name of array to which line contents will be written.
+#
+# Return: 1 (failure) if no lines can be found, otherwise 0 for success
 collect_lines()
 {
     local -n pf_lines="$1"
@@ -421,6 +446,9 @@ collect_lines()
         while read -r "line"; do
             if [ "${line:0:1}" != "#" ]; then
                 if [[ "$line" =~ $CL_LINE_REGEX ]]; then
+                    # ${rec[5]} is not a mistake: ${rec[4]} matched the ${rec[5]}
+                    # string following some spaces which are discarded by using
+                    # ${rec[5]} instead of ${rec[4]}"
                     pf_lines+=( "${rec[1]}" "${rec[2]}" "${rec[3]}" "${rec[5]}" )
                 fi
             fi
@@ -444,6 +472,8 @@ collect_lines()
     return 0
 }
 
+# Create an Emacs "Local Variables" section with a compile-command
+# that will compile the source file for executable file for testing.
 emacs_local_variables()
 {
     local base_name
@@ -484,27 +514,35 @@ if process_command_line_args "$@"; then
     if collect_lines "GLINES"; then
         empty_output_file
 
-        if [ "$OUTPUT_TYPE" -eq 2 ]; then
+        if [ "$OUTPUT_TYPE" -eq "$OUTPUT_TYPE_HEADER" ]; then
             write_text "#ifndef $HEADER_GUARD"
             write_text "#define $HEADER_GUARD"
             write_text ""
         fi
 
-        if [ "$OUTPUT_TYPE" -eq 1 ]; then
+        if [ "$OUTPUT_TYPE" -eq "$OUTPUT_TYPE_CODE" ]; then
             write_text "#include \"${HEADER_FILE_NAME}\""
         else
             write_text "#include \"ti_caps.h\""
+            write_text ""
+            write_text "extern TIV caps_${SET_NAME}[];"
+            if [ "$INCLUDE_NAMES" -ne 0 ]; then
+                write_text "extern const char * names_${SET_NAME}[];"
+            fi
+            if [ "$INCLUDE_DESCRIPTIONS" -ne 0 ]; then
+                write_text "extern const char * desc_${SET_NAME}[];"
+            fi
         fi
 
         write_text ""
 
-        if [ "$OUTPUT_TYPE" -gt 1 ]; then
+        if [ "$OUTPUT_TYPE" -gt "$OUTPUT_TYPE_CODE" ]; then
             code_enum "GLINES" "enum_${SET_NAME}" "${SET_NAME}"
         fi
 
-        if [ "$OUTPUT_TYPE" -ne 2 ]; then
+        if [ "$OUTPUT_TYPE" -ne "$OUTPUT_TYPE_HEADER" ]; then
             code_caps_array "GLINES" "caps_${SET_NAME}"
-            if [ "$INCLUDE_NAMES" -eq 1 ]; then
+            if [ "$INCLUDE_NAMES" -eq "$OUTPUT_TYPE_CODE" ]; then
                 code_strings_array "GLINES" "names_${SET_NAME}" 0
             fi
             if [ "$INCLUDE_DESCRIPTIONS" -eq 1 ]; then
@@ -514,7 +552,7 @@ if process_command_line_args "$@"; then
 
         write_text ""
 
-        if [ "$OUTPUT_TYPE" -eq 2 ]; then
+        if [ "$OUTPUT_TYPE" -eq "$OUTPUT_TYPE_HEADER" ]; then
             write_text "#endif"
         else
             declare -a string_arrays=()
