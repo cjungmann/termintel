@@ -39,6 +39,31 @@ int TIV_setup(void)
    return result==OK;
 }
 
+
+int TIV_get_sequence_from_code(const char **sequence, const char *code)
+{
+   int rval = EINVAL;
+   const char *seq = NULL;
+   *sequence = NULL;
+
+   static char less_termcap[] = "LESS_TERMCAP_xx";
+   memcpy(&less_termcap[13], code, 2);
+   seq = getenv(less_termcap);
+   if (!seq)
+   {
+      static char buff[128];
+      char *area = buff;
+      seq = tgetstr(code, &area);
+   }
+
+   if (seq)
+   {
+      *sequence = seq;
+      rval = 0;
+   }
+
+   return rval;
+}
 /**
  * @brief For TIV instance, set sequence member with copy of sequence using malloced buffer.
  * @param "tiv"   TIV instance to set
@@ -103,6 +128,7 @@ int TIV_set_from_termcap(TIV *tiv)
 
    return EINVAL;
 }
+
 
 /**
  * @brief Populate sequence member of @p tiv instance fron environment or terminfo database.

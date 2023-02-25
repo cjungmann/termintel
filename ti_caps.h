@@ -14,6 +14,8 @@ int TIV_is_terminator(TIV *tiv);
 // Initialize environment
 int TIV_setup(void);
 
+int TIV_get_sequence_from_code(const char **sequence, const char *code);
+
 // Setting capability escape sequences
 int TIV_set_sequence(TIV *tiv, const char *seq);
 int TIV_set_from_env(TIV *tiv);
