@@ -73,7 +73,8 @@ int ti_get_keypress(int *key_index, char *typed_char, TIV *recognized_keys, cons
 #include "ti_tios.c"
 #include "ti_modes.c"
 
-#include "ti_capset_keys.inc"
+#include "ti_capset_keys.c"
+#include "ti_capset_modes.c"
 
 #include <signal.h>
 
@@ -132,35 +133,39 @@ void signal_constant(const char *from, int val)
    }
 }
 
+// Globally defined to make these definitions available to signal functions
+TIV *g_capsets[] = { caps_KEYS, caps_MODES };
+int g_capset_count = sizeof(g_capsets) / sizeof(TIV*);
+
 void restore_environment(int signal)
 {
    ti_exit_ca_mode();
 
-   TIV_destroy_array(caps_MODES);
-   TIV_destroy_array(caps_KEYS);
-
    tios_restore_incoming();
 
+   TIV_destroy_arrays(g_capset_count, g_capsets);
+
    if (signal)
+   {
+      // Signal constants defined in /usr/include/asm/signal.h
+      printf("Exiting due to signal %d.\n", signal);
       exit(1);
+   }
 }
 
 int initialize_environment(void)
 {
-   tios_init();
+   tios_save_incoming();
 
-   if (TIV_setup())
+   if (TIV_setup(g_capset_count, g_capsets))
    {
-      TIV_set_array(caps_KEYS);
-      TIV_set_array(caps_MODES);
-
       ti_enter_ca_mode();
       tios_disable_echo();
 
-      signal(SIGINT, restore_environment);
-      signal(SIGQUIT, restore_environment);
-      signal(SIGABRT, restore_environment);
-      signal(SIGTERM, restore_environment);
+      signal(SIGINT, restore_environment);   // 2
+      signal(SIGQUIT, restore_environment);  // 3
+      signal(SIGABRT, restore_environment);  // 6
+      signal(SIGTERM, restore_environment);  // 15
 
       return 1;
    }
@@ -181,14 +186,13 @@ int main(int argc, const char **argv)
 
 #endif
 
-/* Local Variables:             */
-/* compile-command: "gcc       \*/
-/* -Wall -Werror -pedantic     \*/
-/* -ggdb -std=c99              \*/
-/* -DTI_KEYP_MAIN              \*/
-/* -ltinfo                     \*/
-/* -fsanitize=address          \*/
-/* LSAN_OPTIONS=detect_leaks=1 \*/
-/* -o ti_keyp                  \*/
-/* ti_keyp.c"                   */
-/* End:                         */
+/* Local Variables:          */
+/* compile-command:   "gcc  \*/
+/* -Wall -Werror -pedantic  \*/
+/* -ggdb -std=c99           \*/
+/* -DTI_KEYP_MAIN           \*/
+/* -fsanitize=address       \*/
+/* -ltinfo                  \*/
+/* -o ti_keyp               \*/
+/* ti_keyp.c"                */
+/* End:                      */
