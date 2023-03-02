@@ -1,5 +1,5 @@
-#ifndef TI_KEYP_H
-#define TI_KEYP_H
+#ifndef SL_KEYP_H
+#define SL_KEYP_H
 
 #include "ti_caps.h"
 #include "ti_tios.h"

@@ -1,5 +1,5 @@
-#include "ti_caps.h"
-#include "ti_tios.h"
+#include "sl_caps.h"
+#include "sl_tios.h"
 
 #include <unistd.h>
 
@@ -67,12 +67,12 @@ int ti_get_keypress(int *key_index, char *typed_char, TIV *recognized_keys, cons
 
 
 
-#ifdef TI_KEYP_MAIN
+#ifdef SL_KEYP_MAIN
 
-#include "ti_caps.c"
-#include "ti_tios.c"
+#include "sl_caps.c"
+#include "sl_tios.c"
+
 #include "ti_modes.c"
-
 #include "ti_capset_keys.c"
 #include "ti_capset_modes.c"
 
@@ -190,9 +190,9 @@ int main(int argc, const char **argv)
 /* compile-command:   "gcc  \*/
 /* -Wall -Werror -pedantic  \*/
 /* -ggdb -std=c99           \*/
-/* -DTI_KEYP_MAIN           \*/
+/* -DSL_KEYP_MAIN           \*/
 /* -fsanitize=address       \*/
 /* -ltinfo                  \*/
-/* -o ti_keyp               \*/
-/* ti_keyp.c"                */
+/* -o sl_keyp               \*/
+/* sl_keyp.c"                */
 /* End:                      */

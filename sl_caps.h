@@ -1,5 +1,5 @@
-#ifndef TI_CAPS_H
-#define TI_CAPS_H
+#ifndef SL_CAPS_H
+#define SL_CAPS_H
 
 #include <stddef.h>
 #include <stdarg.h>

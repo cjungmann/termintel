@@ -114,7 +114,7 @@ void tios_set_raw_mode(void)
    tcsetattr(STDIN_FILENO, TCSAFLUSH, &tcur);
 }
 
-#ifdef TI_TIOS_MAIN
+#ifdef SL_TIOS_MAIN
 
 int main(int argc, const char **argv)
 {
@@ -130,9 +130,9 @@ int main(int argc, const char **argv)
 /* compile-command: "gcc   \*/
 /* -Wall -Werror -pedantic \*/
 /* -ggdb -std=c99          \*/
-/* -DTI_TIOS_MAIN          \*/
+/* -DSL_TIOS_MAIN          \*/
 /* -ltinfo                 \*/
 /* -fsanitize=address      \*/
-/* -o ti_tios              \*/
-/* ti_tios.c"               */
+/* -o sl_tios              \*/
+/* sl_tios.c"               */
 /* End:                     */

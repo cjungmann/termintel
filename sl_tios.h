@@ -1,5 +1,5 @@
-#ifndef TI_TIOS_H
-#define TI_TIOS_H
+#ifndef SL_TIOS_H
+#define SL_TIOS_H
 
 void tios_save_incoming(void);
 void tios_restore_incoming(void);

@@ -7,7 +7,7 @@
 #include <unistd.h>   // for STDIN_FILENO
 
 
-#include "ti_caps.h"
+#include "sl_caps.h"
 
 /**
  * @brief Idenfify terminating TIV element
@@ -525,7 +525,7 @@ void TIV_execute_params_with_lines(const TIV **tiv, int index, int linecount,...
    }
 }
 
-#ifdef TI_CAPS_MAIN
+#ifdef SL_CAPS_MAIN
 
 // Main
 int main(int argc, const char **argv)
@@ -542,6 +542,6 @@ int main(int argc, const char **argv)
 /* -ggdb -std=c99            \*/
 /* -ltinfo                   \*/
 /* -fsanitize=address        \*/
-/* -DTI_CAPS_MAIN            \*/
-/* -o ti_caps ti_caps.c"      */
+/* -DSL_CAPS_MAIN            \*/
+/* -o sl_caps sl_caps.c"      */
 /* End:                       */
