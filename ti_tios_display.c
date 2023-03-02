@@ -1,3 +1,9 @@
+/**
+ * @file ti_tios_display.c
+ *
+ * This file includes some functions that can help debug termios status.
+ */
+
 #include <termios.h>
 #include <term.h>
 #include <stdio.h>
