@@ -1,4 +1,4 @@
-#include "ti_caps.h"
+#include "sl_caps.h"
 #include "ti_capset_modes.h"
 
 #include <unistd.h>

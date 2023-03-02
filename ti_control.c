@@ -1,8 +1,8 @@
+#include "sl_caps.h"
+#include "sl_tios.h"
 #include "ti_capset_control.h"
 #include "ti_capset_keys.h"
 #include "ti_capset_modes.h"
-#include "ti_caps.h"
-#include "ti_tios.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -144,11 +144,11 @@ void ti_report_cursor_position(int* rows, int* cols)
 
 #include <signal.h>
 
-#include "ti_caps.c"
-#include "ti_tios.c"
-#include "ti_modes.c"
-#include "ti_keyp.c"
+#include "sl_caps.c"
+#include "sl_tios.c"
+#include "sl_keyp.c"
 
+#include "ti_modes.c"
 #include "ti_capset_control.c"
 #include "ti_capset_keys.c"
 #include "ti_capset_modes.c"
