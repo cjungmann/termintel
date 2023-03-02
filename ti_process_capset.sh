@@ -349,7 +349,7 @@ EOF2
     if get_output_base_name "base_name"; then
         echo "#ifdef ${base_name^^}_MAIN" >> "$OUTPUT_FILE"
         echo                              >> "$OUTPUT_FILE"
-        echo "#include \"ti_caps.c\""     >> "$OUTPUT_FILE"
+        echo "#include \"sl_caps.c\""     >> "$OUTPUT_FILE"
         echo                              >> "$OUTPUT_FILE"
 
         write_text "$main_start_code"
@@ -523,7 +523,7 @@ if process_command_line_args "$@"; then
         if [ "$OUTPUT_TYPE" -eq "$OUTPUT_TYPE_CODE" ]; then
             write_text "#include \"${HEADER_FILE_NAME}\""
         else
-            write_text "#include \"ti_caps.h\""
+            write_text "#include \"sl_caps.h\""
             write_text ""
             write_text "extern TIV caps_${SET_NAME}[];"
             if [ "$INCLUDE_NAMES" -ne 0 ]; then
