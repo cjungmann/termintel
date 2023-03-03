@@ -1,8 +1,8 @@
 #ifndef SL_KEYP_H
 #define SL_KEYP_H
 
-#include "ti_caps.h"
-#include "ti_tios.h"
+#include "sl_caps.h"
+#include "sl_tios.h"
 
 int ti_get_keypress(int *key_index,
                     char *typed_char,
