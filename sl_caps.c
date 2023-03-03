@@ -439,9 +439,9 @@ const char *TIV_get_sequence(const TIV *tiv)
  * @param "tiv"   Array of TIV elements from which the item will be selected
  * @param "index" Index into array @p tiv.
  */
-void TIV_execute(const TIV **tiv, int index)
+void TIV_execute(const TIV *tiv, int index)
 {
-   const TIV *t = tiv[index];
+   const TIV *t = &tiv[index];
    if (t->sequence)
       tputs(t->sequence, 1, putchar);
 }
@@ -457,9 +457,9 @@ void TIV_execute(const TIV **tiv, int index)
  * @param "index"     Index into array @p tiv.
  * @param "linecount" Number of lines to be affected by the call.
  */
-void TIV_execute_with_lines(const TIV **tiv, int index, int linecount)
+void TIV_execute_with_lines(const TIV *tiv, int index, int linecount)
 {
-   const TIV *t = tiv[index];
+   const TIV *t = &tiv[index];
    if (t->sequence)
       tputs(t->sequence, linecount, putchar);
 }
@@ -475,9 +475,9 @@ void TIV_execute_with_lines(const TIV **tiv, int index, int linecount)
  * @param "index" Index into array @p tiv.
  * @param "..."   const int arguments as necessary for the indicated capability.
  */
-void TIV_execute_params(const TIV **tiv, int index,...)
+void TIV_execute_params(const TIV *tiv, int index,...)
 {
-   const TIV *t = tiv[index];
+   const TIV *t = &tiv[index];
    if (t->sequence)
    {
       va_list list_args;
@@ -506,9 +506,9 @@ void TIV_execute_params(const TIV **tiv, int index,...)
  * @param "linecount" Number of lines to be affected by the call.
  * @param "..."       const int arguments as necessary for the indicated capability.
  */
-void TIV_execute_params_with_lines(const TIV **tiv, int index, int linecount,...)
+void TIV_execute_params_with_lines(const TIV *tiv, int index, int linecount,...)
 {
-   const TIV *t = tiv[index];
+   const TIV *t = &tiv[index];
    if (t->sequence)
    {
       va_list list_args;

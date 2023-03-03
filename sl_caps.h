@@ -42,10 +42,10 @@ int TIV_find_index_by_code(TIV *tiv, const char *code);
 const char *TIV_get_sequence(const TIV *tiv);
 
 // Using capabilities
-void TIV_execute(const TIV **tiv, int index);
-void TIV_execute_with_lines(const TIV **tiv, int index, int linecount);
-void TIV_execute_params(const TIV **tiv, int index,...);
-void TIV_execute_params_with_lines(const TIV **tiv, int index, int linecount,...);
+void TIV_execute(const TIV *tiv, int index);
+void TIV_execute_with_lines(const TIV *tiv, int index, int linecount);
+void TIV_execute_params(const TIV *tiv, int index,...);
+void TIV_execute_params_with_lines(const TIV *tiv, int index, int linecount,...);
 
 
 #endif
