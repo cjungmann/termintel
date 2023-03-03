@@ -1,5 +1,5 @@
 #include <sys/ioctl.h>
-#include <asm/termbits.h>
+#include <unistd.h>
 
 void ti_get_screen_size(int *rows, int *cols)
 {
