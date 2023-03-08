@@ -463,7 +463,7 @@ collect_lines()
             int_collect_lines <<< "$file_contents"
         else
             echo
-            echo $'   \e[31;1mNothing to read, neither -i input file nor STDIN.\e[m'
+            echo $'   \e[31;1mNothing to read, neither -i input_file nor STDIN.\e[m'
             echo
             return 1
         fi
