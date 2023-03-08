@@ -1,6 +1,12 @@
 # @file: Makefile
 
-TARGET = target
+# Extract directory name to use for default TARGET value
+# (remove this if setting an explicit TARGET name):
+HOSTDIR := $(subst /, ,$(subst /Makefile,,$(abspath Makefile)))
+HOSTDIR := $(word $(words $(HOSTDIR)),$(HOSTDIR))
+
+# Default TARGET name is host directory name:
+TARGET = $(HOSTDIR)
 
 # Overrideable path with recommended value as default:
 PREFIX ?= /usr/local
@@ -29,7 +35,8 @@ define extract_group =
 endef
 
 CAPSET_SOURCES := $(addprefix ti_,$(addsuffix .c,$(basename $(wildcard *.txt))))
-CAPSET_MODULES += $(addsuffix .o,$(basename $(CAPSET_SOURCES)))
+CAPSET_HEADERS := $(addsuffix .h,$(basename $(CAPSET_SOURCES)))
+CAPSET_MODULES := $(addsuffix .o,$(basename $(CAPSET_SOURCES)))
 SOURCE_MODULES := $(addsuffix .o,$(basename $(wildcard *.c)))
 # Add without duplicates:
 SOURCE_MODULES += $(filter-out $(SOURCE_MODULES),$(CAPSET_MODULES))
@@ -43,10 +50,10 @@ all: $(TARGET)
 $(TARGET) : $(SOURCE_MODULES)
 	$(CC) $(CFLAGS) -o $@ $(SOURCE_MODULES) $(LFLAGS)
 
-%.o : %.c
+%.o : %.c $(CAPSET_HEADERS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-ti_capset_%.c : capset_%.txt
+ti_capset_%.c ti_capset_%.h : capset_%.txt
 	$(call extract_group,$<)
 
 .PHONY: report
@@ -54,6 +61,7 @@ report:
 	@echo "CAPSET_SOURCES are " $(CAPSET_SOURCES)
 	@echo "CAPSET_MODULES are " $(CAPSET_MODULES)
 	@echo "SOURCE MODULES are " $(SOURCE_MODULES)
+	@echo "HOSTDIR is " $(HOSTDIR)
 
 .PHONY: clean
 clean:
