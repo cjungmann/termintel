@@ -1,7 +1,5 @@
-#include "sl_caps.h"
-#include "sl_tios.h"
-
 #include <unistd.h>
+#include "termintel.h"
 
 /**
  * @brief Get and categorize a "silent" keypress.
