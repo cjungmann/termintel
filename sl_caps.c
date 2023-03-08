@@ -6,8 +6,7 @@
 #include <term.h>
 #include <unistd.h>   // for STDIN_FILENO
 
-
-#include "sl_caps.h"
+#include "termintel.h"
 
 /**
  * @brief Idenfify terminating TIV element
@@ -264,6 +263,49 @@ void TIV_print_sequence(const char *seq)
          printf("%c", *tptr);
 
       ++tptr;
+   }
+}
+
+/**
+ * @brief Copies sequence to target buffer, translating unprintable characters.
+ *
+ * Unprintable character translation inserts a caret (^) in front
+ * of the corresponding letter to show as a control character.
+ * Output is limited to the length of the submitted buffer.
+ *
+ * @param "buff"    target character buffer
+ * @param "len"     length of @p buff
+ * @param "seq"     sequence string to be translated
+ */
+void TIV_translate_sequence(char *buff, int len, const char *seq)
+{
+   const char *sptr = seq;
+   char *ptr = buff;
+   char *end = ptr + len;
+
+   while (*sptr && ptr < end)
+   {
+      if (*sptr >= ' ' && *sptr < 127) // printable characters
+         *ptr = *sptr;
+      else if (*sptr < ' ')            // control characters
+      {
+         if (ptr + 1 < end)
+         {
+            *ptr++ = '^';
+            *ptr = *sptr + 64;
+         }
+      }
+      else if (*sptr == 127)           // backspace
+      {
+         if (ptr + 1 < end)
+         {
+            *ptr++ = '^';
+            *ptr = '?';
+         }
+      }
+
+      ++ptr;
+      ++sptr;
    }
 }
 

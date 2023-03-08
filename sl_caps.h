@@ -32,6 +32,7 @@ void TIV_set_array(TIV *tiv);
 // Display/debugging functions
 int TIV_string_array_max_length(const char **strings);
 void TIV_print_sequence(const char *seq);
+void TIV_translate_sequence(char *buff, int len, const char *seq);
 void TIV_dump(TIV *tiv, const char **names, int names_width);
 void TIV_dump_array(TIV *tiv, const char **names);
 
