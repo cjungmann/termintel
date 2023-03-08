@@ -38,7 +38,7 @@ save_cursor                 sc         sc   save current cursor position (P)
 restore_cursor              rc         rc   restore cursor to position of last save_cursor
 
 # Cursor position report
-user7                       u7         u7   User string #7 (get cursor position)
+user7                       u7         u7   User string #7 (Cursor Position Report 'CPR')
 
 
 
