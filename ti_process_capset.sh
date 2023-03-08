@@ -523,7 +523,7 @@ if process_command_line_args "$@"; then
         if [ "$OUTPUT_TYPE" -eq "$OUTPUT_TYPE_CODE" ]; then
             write_text "#include \"${HEADER_FILE_NAME}\""
         else
-            write_text "#include \"sl_caps.h\""
+            write_text "#include <termintel.h>"
             write_text ""
             write_text "extern TIV caps_${SET_NAME}[];"
             if [ "$INCLUDE_NAMES" -ne 0 ]; then
