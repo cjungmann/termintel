@@ -19,11 +19,6 @@ else
 	LFLAGS += -ltermintel
 endif
 
-# Build list of source and header files generated from capset textfiles:
-CAPSET_SOURCE_BASES := $(addprefix ti_,$(basename $(wildcard capset_*.txt)))
-CAPSET_SOURCES := $(addsuffix .c,$(CAPSET_SOURCE_BASES))
-CAPSET_SOURCES := $(CAPSET_SOURCES) $(addsuffix .h,$(CAPSET_SOURCE_BASES))
-
 # Function that generates source (%.c) and header (%.h) files for a
 # given capset_*.txt file
 define extract_group =
@@ -33,10 +28,10 @@ define extract_group =
 	./ti_process_capset.sh -i $(1) -n -d -o ti_$(addsuffix .h,$(root)) -s $(sname) -t 2
 endef
 
-
 CAPSET_SOURCES := $(addprefix ti_,$(addsuffix .c,$(basename $(wildcard *.txt))))
 CAPSET_MODULES += $(addsuffix .o,$(basename $(CAPSET_SOURCES)))
 SOURCE_MODULES := $(addsuffix .o,$(basename $(wildcard *.c)))
+# Add without duplicates:
 SOURCE_MODULES += $(filter-out $(SOURCE_MODULES),$(CAPSET_MODULES))
 
 # Prevent intermediate capset_*.c files from being deleted:
@@ -46,7 +41,6 @@ SOURCE_MODULES += $(filter-out $(SOURCE_MODULES),$(CAPSET_MODULES))
 all: $(TARGET)
 
 $(TARGET) : $(SOURCE_MODULES)
-	# ld -o $@ $(SOURCE_MODULES) /lib/crt1.o -lc -ltinfo -Bstatic -ltermintel
 	$(CC) $(CFLAGS) -o $@ $(SOURCE_MODULES) $(LFLAGS)
 
 %.o : %.c
