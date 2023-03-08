@@ -1,6 +1,6 @@
 # @file: Makefile
 
-TARGET = first
+TARGET = target
 
 # Overrideable path with recommended value as default:
 PREFIX ?= /usr/local
@@ -63,7 +63,7 @@ clean:
 
 .PHONY: install
 install:
-	install -D --mode=75 $(TARGET) $(PREFIX)/bin/$(TARGET)
+	install -D --mode=755 $(TARGET) $(PREFIX)/bin/$(TARGET)
 
 .PHONY: uninstall
 uninstall:
@@ -82,4 +82,5 @@ help:
 	@echo "                         default value 0 (for shared object library)."
 	@echo "make PREFIX=/usr         Install/uninstall from \"/usr/bin\" directory."
 	@echo "                         Default value is \"/usr/local\"."
+	@echo "make DEBUG=1             Compile with -ggdb option on"
 
