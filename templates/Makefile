@@ -1,12 +1,23 @@
 # @file: Makefile
 
+TARGET = first
+
 # Overrideable path with recommended value as default:
 PREFIX ?= /usr/local
 
-# Overrideable static variable
-STATIC_OUTPUT = 0
+CFLAGS = -Wall -Werror -std=c99 -pedantic
+DEBUG=0
+ifeq ($(DEBUG),1)
+	CFLAGS += -ggdb
+endif
 
-TARGET = first
+LFLAGS = -ltinfo
+STATIC_OUTPUT = 0
+ifeq ($(STATIC_OUTPUT),1)
+	LFLAGS += -l:libtermintel.a
+else
+	LFLAGS += -ltermintel
+endif
 
 # Build list of source and header files generated from capset textfiles:
 CAPSET_SOURCE_BASES := $(addprefix ti_,$(basename $(wildcard capset_*.txt)))
@@ -22,15 +33,6 @@ define extract_group =
 	./ti_process_capset.sh -i $(1) -n -d -o ti_$(addsuffix .h,$(root)) -s $(sname) -t 2
 endef
 
-
-# Setup compiling flags:
-CFLAGS = -Wall -Werror -std=c99 -pedantic -ggdb
-LFLAGS = -ltinfo
-ifeq ($(STATIC_OUTPUT),1)
-	LFLAGS += -l:libtermintel.a
-else
-	LFLAGS += -ltermintel
-endif
 
 CAPSET_SOURCES := $(addprefix ti_,$(addsuffix .c,$(basename $(wildcard *.txt))))
 CAPSET_MODULES += $(addsuffix .o,$(basename $(CAPSET_SOURCES)))
