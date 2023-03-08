@@ -60,12 +60,14 @@ sl_%.o : sl_%.c
 install:
 	install -D --mode=755 $(TARGET).so $(PREFIX)/lib
 	install -D --mode=755 $(TARGET).a  $(PREFIX)/lib
-	install -D --mode=644 termintel.h     $(PREFIX)/include
+	install -D --mode=644 termintel.h  $(PREFIX)/include
+	install -D --mode=755 ti_create_capset_code.sh $(PREFIX)/bin
 	ldconfig $(PREFIX)/lib
 
 .PHONY: uninstall
 uninstall:
-	rm -f $(PREFIX)/include/$(TARGET).so
+	rm -f $(PREFIX)/bin/ti_create_capset_code.sh
+	rm -f $(PREFIX)/include/$(TARGET).h
 	rm -f $(PREFIX)/lib/$(TARGET).a
 	rm -f $(PREFIX)/lib/$(TARGET).so
 	ldconfig $(PREFIX)/lib
