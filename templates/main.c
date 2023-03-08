@@ -1,7 +1,10 @@
 #include <termintel.h>
+
 #include "ti_capset_control.h"
 #include "ti_capset_keys.h"
 #include "ti_capset_modes.h"
+
+#include "program.h"
 
 #include <signal.h>
 #include <stdio.h>
@@ -99,8 +102,6 @@ int main_init(void)
 
    return 0;
 }
-
-#include "program.h"
 
 /**
  * @brief Necessary @p main function, calls @ref program.
