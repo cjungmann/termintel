@@ -8,7 +8,7 @@ void ti_get_screen_size(int *rows, int *cols)
    if (result==0)
    {
       *rows = ws.ws_row;
-      *cols = ws.ws_col; 
+      *cols = ws.ws_col;
   }
    else
       *rows = *cols = -1;
