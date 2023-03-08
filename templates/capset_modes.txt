@@ -1,0 +1,30 @@
+# -*- mode:sh -*-
+
+enter_ca_mode               smcup      ti   string to start programs using cup
+exit_ca_mode                rmcup      te   strings to end programs using cup
+keypad_xmit                 smkx       ks   enter 'keyboard_transmit' mode
+keypad_local                rmkx       ke   leave 'keyboard_transmit' mode
+
+enter_underline_mode        smul       us   begin underline mode
+exit_underline_mode         rmul       ue   exit underline mode
+enter_standout_mode         smso       so   begin standout mode
+exit_standout_mode          rmso       se   exit standout modee
+
+enter_reverse_mode          rev        mr   turn on reverse video mode
+enter_bold_mode             bold       md   turn on bold (extra bright) mode
+enter_dim_mode              dim        mh   turn on half-bright mode
+exit_attribute_mode         sgr0       me   turn off all attributes
+
+# move_insert_mode            mir        mi   safe to move while in insert mode
+# exit_insert_mode            rmir       ei   exit insert mode
+# enter_alt_charset_mode      smacs      as   start alternate character set (P)
+# enter_blink_mode            blink      mb   turn on blinking
+# enter_insert_mode           smir       im   enter insert mode
+# enter_secure_mode           invis      mk   turn on blank mode (characters invisible)
+# exit_alt_charset_mode       rmacs      ae   end alternate character set (P)
+# meta_off                    rmm        mo   turn off meta mode
+# meta_on                     smm        mm   turn on meta mode (8th-bit on)
+# enter_am_mode               smam       SA   turn on automatic margins
+# exit_am_mode                rmam       RA   turn off automatic margins
+# enter_italics_mode          sitm       ZH   Enter italic mode
+# exit_italics_mode           ritm       ZR   End italic mode
