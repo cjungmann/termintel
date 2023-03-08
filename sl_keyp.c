@@ -9,6 +9,9 @@
  * values that may be characters or indexes into an array of
  * recognized keycodes.
  *
+ * Can use all NULL parameters if simple unrecognized keypress is all
+ * that is needed.
+ *
  * @param[out] "key_index"       pointer to integer representing the index into
  *                               the array @p recognized_keys. The integer will be
  *                               set to '-1' if not found in the array.
@@ -36,8 +39,10 @@ int ti_get_keypress(int *key_index, char *typed_char, TIV *recognized_keys, cons
       *sequence = buff;
 
    // Set unused values to output parameters in case of early exit
-   *key_index = -1;
-   *typed_char = -1;
+   if (key_index)
+      *key_index = -1;
+   if (typed_char)
+      *typed_char = -1;
 
    tios_set_read_params(1, 10);
 
@@ -47,14 +52,14 @@ int ti_get_keypress(int *key_index, char *typed_char, TIV *recognized_keys, cons
 
    if (bytes_read == -1)
       return 0;
-   else if (buff[0] == '\033')
+   else if (buff[0] == '\033' && key_index && recognized_keys)
    {
       buff[bytes_read] = '\0';
       *key_index = TIV_find_index_by_sequence(recognized_keys, buff);
       if (*key_index >= 0)
          return 1;
    }
-   else
+   else if (typed_char)
    {
       *typed_char = buff[0];
       return 2;
