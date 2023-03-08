@@ -24,8 +24,8 @@ endif
 define extract_group =
 	$(eval root = $(basename $(1)))
 	$(eval sname != echo $(subst capset_,,$(root)) | tr [:lower:] [:upper:] )
-	./ti_process_capset.sh -i $(1) -n -d -o ti_$(addsuffix .c,$(root)) -s $(sname) -t 1
-	./ti_process_capset.sh -i $(1) -n -d -o ti_$(addsuffix .h,$(root)) -s $(sname) -t 2
+	ti_create_capset_code.sh -i $(1) -n -d -o ti_$(addsuffix .c,$(root)) -s $(sname) -t 1
+	ti_create_capset_code.sh -i $(1) -n -d -o ti_$(addsuffix .h,$(root)) -s $(sname) -t 2
 endef
 
 CAPSET_SOURCES := $(addprefix ti_,$(addsuffix .c,$(basename $(wildcard *.txt))))
