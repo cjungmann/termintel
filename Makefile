@@ -15,6 +15,8 @@ LIB_OBJECTS := $(addsuffix .o,$(basename $(wildcard sl_*.c)))
 # Create lists of generated files
 EXECUTABLES := $(basename $(wildcard *.c))
 
+TEMPLATES_DIR := $(PREFIX)/lib/termintel/templates
+
 ###### RULES #######
 
 all: $(TARGET).so $(TARGET).a
@@ -34,14 +36,19 @@ install:
 	install -D --mode=755 $(TARGET).a  $(PREFIX)/lib
 	install -D --mode=644 termintel.h  $(PREFIX)/include
 	install -D --mode=755 ti_create_capset_code.sh $(PREFIX)/bin
+	install -D --mode=755 ti_install_templates.sh $(PREFIX)/bin
+	install -D --mode=755 -d $(TEMPLATES_DIR)
+	cp templates/* $(TEMPLATES_DIR)
 	ldconfig $(PREFIX)/lib
 
 .PHONY: uninstall
 uninstall:
 	rm -f $(PREFIX)/bin/ti_create_capset_code.sh
+	rm -f $(PREFIX)/bin/ti_install_templates.sh
 	rm -f $(PREFIX)/include/$(TARGET).h
 	rm -f $(PREFIX)/lib/$(TARGET).a
 	rm -f $(PREFIX)/lib/$(TARGET).so
+	rm -rf $(PREFIX)/lib/termintel
 	ldconfig $(PREFIX)/lib
 
 .PHONY: report
