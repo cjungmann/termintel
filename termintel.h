@@ -3,10 +3,17 @@
 
 #include <stddef.h>
 
+/**
+ * @brief Contains a terminfo escape string as identified by a TERMCAP code.
+ *
+ * This array is initialized only with the @p code element, the
+ * @p sequence and @p index are set when querying the terminal
+ * for the associated escape sequences.
+ */
 typedef struct terminfo_value {
-   char code[2];
-   char *sequence;
-   int  index;
+   char code[2];           ///< Termcap code
+   char *sequence;         ///< escape sequence for this terminal for the code
+   int  index;             ///< index reference into array containing this element.
 } TIV;
 
 int TIV_is_terminator(TIV *tiv);
