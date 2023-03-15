@@ -4,6 +4,9 @@
 #include <stdlib.h>    // for exit()
 #include <stdio.h>     // for printf()
 
+/**
+ * @brief Stores incoming termios settings to be restore up program exit.
+ */
 struct termios g_termios_incoming = { 0 };
 
 /**
@@ -27,6 +30,9 @@ void tios_restore_incoming(void)
    tcsetattr(STDIN_FILENO, TCSANOW, &g_termios_incoming);
 }
 
+/**
+ * @brief Declared globally so available for disable and enable functions.
+ */
 tcflag_t tios_local_mode_echo_flags =
    ECHO         // echo input characters
    | ECHONL     // echo NewLine even if ECHO is OFF
@@ -114,6 +120,9 @@ void tios_set_raw_mode(void)
    tcsetattr(STDIN_FILENO, TCSAFLUSH, &tcur);
 }
 
+// Hide debugging code from Doxygen
+/** @cond */
+
 #ifdef SL_TIOS_MAIN
 
 int main(int argc, const char **argv)
@@ -122,8 +131,9 @@ int main(int argc, const char **argv)
    return 0;
 }
 
-
 #endif
+
+/** @endcond */
 
 
 /* Local Variables:         */
