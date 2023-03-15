@@ -567,6 +567,9 @@ void TIV_execute_params_with_lines(const TIV *tiv, int index, int linecount,...)
    }
 }
 
+// Hide debugging code from Doxygen
+/** @cond */
+
 #ifdef SL_CAPS_MAIN
 
 // Main
@@ -577,6 +580,8 @@ int main(int argc, const char **argv)
 }
 
 #endif
+
+/** @endcond */
 
 /* Local Variables:           */
 /* compile-command: "gcc     \*/

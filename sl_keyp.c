@@ -69,6 +69,8 @@ int ti_get_keypress(int *key_index, char *typed_char, TIV *recognized_keys, cons
 }
 
 
+// Hide debugging code from Doxygen
+/** @cond */
 
 #ifdef SL_KEYP_MAIN
 
@@ -188,6 +190,8 @@ int main(int argc, const char **argv)
 }
 
 #endif
+
+/** @endcond */
 
 /* Local Variables:          */
 /* compile-command:   "gcc  \*/
