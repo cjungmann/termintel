@@ -1,3 +1,11 @@
+/**
+ * @file termintel.h
+ * @brief consolidated library header
+ *
+ * Include this header for source files that use functions from
+ * the @p termintel library.
+ */
+
 #ifndef TERMINTEL_H
 #define TERMINTEL_H
 
