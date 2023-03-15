@@ -27,7 +27,7 @@ $(TARGET).so: $(LIB_OBJECTS)
 $(TARGET).a: $(LIB_OBJECTS)
 	ar rcs $@ $(LIB_OBJECTS)
 
-sl_%.o : sl_%.c
+sl_%.o : sl_%.c termintel.h
 	$(CC) $(O_CFLAGS) -c -o $@ $<
 
 .PHONY: install
